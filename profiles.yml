@@ -1,0 +1,14 @@
+football_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: NSVPBTB-UQ85189
+      user: MARTINARO21
+      password: Fi112358132134
+      role: dbt_developer  # opcional
+      database: FOOTBALL
+      schema: KAGGLE
+      warehouse: FOOTBALL_ANALYTICS  # Este campo es obligatorio
+      threads: 4
+      client_session_keep_alive: false
