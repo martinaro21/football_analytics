@@ -1,0 +1,290 @@
+version: 2
+
+models:
+  - name: stg_kaggle__appearances
+    description: ""
+    columns:
+      - name: appearance_id
+        description: "Unique identifier for each player appearance in a match."
+        tests:
+          - not_null
+          - unique
+      - name: game_id
+        description: "Unique identifier for the match where the appearance occurred."
+      - name: player_id
+        description: "Unique identifier for the player making the appearance."
+      - name: player_club_id
+        description: "Identifier for the club the player belonged to during the match."
+      - name: player_current_club_id
+        description: "Identifier for the player's current club at the time of the appearance."
+      - name: date
+        description: "Date the match was played."
+      - name: player_name
+        description: "Full name of the player."
+      - name: competition_id
+        description: "Identifier for the competition the match belongs to."
+      - name: yellow_cards
+        description: "Number of yellow cards received by the player in the match."
+      - name: red_cards
+        description: "Number of red cards received by the player in the match."
+      - name: goals
+        description: "Number of goals scored by the player in the match."
+      - name: assists
+        description: "Number of assists made by the player in the match."
+      - name: minutes_played
+        description: "Total minutes the player was on the pitch during the match."
+
+  - name: stg_kaggle__players
+    description: ""
+    columns:
+      - name: player_id
+        description: "Unique identifier for the player."
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        description: "Player's first name."
+      - name: last_name
+        description: "Player's last name."
+      - name: name
+        description: "Full name of the player."
+      - name: last_season
+        description: "The most recent season the player participated in."
+      - name: current_club_id
+        description: "Identifier of the player's current club."
+      - name: player_code
+        description: "Unique code assigned to the player."
+      - name: country_of_birth
+        description: "Country where the player was born."
+      - name: city_of_birth
+        description: "City where the player was born."
+      - name: country_of_citizenship
+        description: "Country or countries of which the player holds citizenship."
+      - name: date_of_birth
+        description: "Player's date of birth."
+      - name: sub_position
+        description: "Secondary playing position of the player."
+      - name: position
+        description: "Primary playing position of the player."
+      - name: foot
+        description: "Player's preferred foot (e.g., left, right)."
+      - name: height_in_cm
+        description: "Player's height in centimeters."
+      - name: contract_expiration_date
+        description: "Date when the player's current contract expires."
+      - name: agent_name
+        description: "Name of the player's agent."
+      - name: image_url
+        description: "URL to the player's image or profile photo."
+      - name: url
+        description: "Web URL with more information about the player."
+      - name: current_club_domestic_competition_id
+        description: "Identifier for the domestic competition of the player's current club."
+      - name: current_club_name
+        description: "Name of the player's current club."
+      - name: market_value_in_eur
+        description: "Current estimated market value of the player in Euros."
+      - name: highest_market_value_in_eur
+        description: "Highest historical market value of the player in Euros."
+
+  - name: stg_kaggle__transfers
+    description: ""
+    columns:
+      - name: player_id
+        description: "Unique identifier for the player involved in the transfer."
+      - name: transfer_date
+        description: "Date when the transfer took place."
+      - name: transfer_season
+        description: "Season during which the transfer occurred."
+      - name: from_club_id
+        description: "Identifier of the club the player transferred from."
+      - name: to_club_id
+        description: "Identifier of the club the player transferred to."
+      - name: from_club_name
+        description: "Name of the club the player transferred from."
+      - name: to_club_name
+        description: "Name of the club the player transferred to."
+      - name: transfer_fee
+        description: "Fee paid for the transfer, if applicable."
+      - name: market_value_in_eur
+        description: "Player's market value in Euros at the time of the transfer."
+      - name: player_name
+        description: "Full name of the player involved in the transfer."
+
+
+  - name: stg_kaggle__game_lineups
+    description: ""
+    columns:
+      - name: game_lineups_id
+        description: "Unique identifier for each player lineup entry in a match."
+        tests:
+          - not_null
+          - unique
+      - name: date
+        description: "Date when the match took place."
+      - name: game_id
+        description: "Identifier for the match."
+      - name: player_id
+        description: "Identifier for the player in the lineup."
+      - name: club_id
+        description: "Identifier for the club the player represents."
+      - name: player_name
+        description: "Full name of the player."
+      - name: type
+        description: "Type of player participation (e.g., starter, substitute)."
+      - name: position
+        description: "Player's position on the field."
+      - name: number
+        description: "Jersey number worn by the player during the match."
+      - name: team_captain
+        description: "Boolean indicating if the player was the team captain."
+
+  - name: stg_kaggle__clubs
+    description: ""
+    columns:
+      - name: club_id
+        description: "Unique identifier for the football club."
+        tests:
+          - not_null
+          - unique
+      - name: club_code
+        description: "Short alphanumeric code representing the club."
+      - name: name
+        description: "Full name of the football club."
+      - name: domestic_competition_id
+        description: "Identifier for the club's primary domestic competition."
+      - name: total_market_value
+        description: "Estimated total market value of the club's squad."
+      - name: squad_size
+        description: "Number of players in the club's squad."
+      - name: average_age
+        description: "Average age of the players in the squad."
+      - name: foreigners_number
+        description: "Number of foreign players in the squad."
+      - name: foreigners_percentage
+        description: "Percentage of the squad made up of foreign players."
+      - name: national_team_players
+        description: "Number of players in the squad who represent national teams."
+      - name: stadium_name
+        description: "Name of the club's home stadium."
+      - name: stadium_seats
+        description: "Total seating capacity of the home stadium."
+      - name: net_transfer_record
+        description: "Net transfer spending or income for the club (may be positive or negative)."
+      - name: coach_name
+        description: "Full name of the club's head coach."
+      - name: last_season
+        description: "The last season for which data is available for the club."
+      - name: filename
+        description: "Name of the source file where the club's data was found."
+      - name: url
+        description: "Web URL containing more information about the club."
+
+  - name: stg_kaggle__game_events
+    description: ""
+    columns:
+      - name: game_event_id
+        description: "Unique identifier for each event occurring in a match."
+        tests:
+          - not_null
+          - unique
+      - name: date
+        description: "Date when the event occurred."
+      - name: game_id
+        description: "Identifier of the match where the event took place."
+      - name: minute
+        description: "Minute in the match when the event occurred."
+      - name: type
+        description: "Type of event (e.g., goal, foul, substitution)."
+      - name: club_id
+        description: "Identifier of the club involved in the event."
+      - name: player_id
+        description: "Identifier of the player involved in the event."
+      - name: description
+        description: "Detailed description of the event."
+      - name: player_in_id
+        description: "Identifier of the player entering the game (for substitutions)."
+      - name: player_assist_id
+        description: "Identifier of the player assisting the event (e.g., assist for a goal)."
+
+  - name: stg_kaggle__competitions
+    description: ""
+    columns:
+      - name: competition_id
+        description: "Unique identifier for the football competition."
+        tests:
+          - not_null
+          - unique
+      - name: competition_code
+        description: "Short alphanumeric code representing the competition."
+      - name: name
+        description: "Full name of the competition."
+      - name: sub_type
+        description: "Sub-type of the competition (e.g., cup, league, etc.)."
+      - name: type
+        description: "Main type of the competition (e.g., international, domestic)."
+      - name: country_id
+        description: "Identifier for the country organizing the competition."
+      - name: country_name
+        description: "Full name of the country where the competition is based."
+      - name: domestic_league_code
+        description: "Code of the top domestic league associated with this competition."
+      - name: confederation
+        description: "Football confederation organizing or affiliated with the competition (e.g., UEFA, CONMEBOL)."
+      - name: url
+        description: "Web URL containing more information about the competition."
+      - name: is_major_national_league
+        description: "Boolean indicating whether the competition is a major national league (true/false)."
+  
+  - name: stg_kaggle__games
+    description: ""
+    columns:
+      - name: game_id
+        description: "Unique identifier for the match."
+        tests:
+          - not_null
+          - unique
+      - name: competition_id
+        description: "Identifier for the competition in which the match took place."
+      - name: season
+        description: "Season during which the match was played."
+      - name: round
+        description: "Round or stage of the competition for this match."
+      - name: date
+        description: "Date when the match was played."
+      - name: home_club_id
+        description: "Identifier for the home team."
+      - name: away_club_id
+        description: "Identifier for the away team."
+      - name: home_club_goals
+        description: "Number of goals scored by the home team."
+      - name: away_club_goals
+        description: "Number of goals scored by the away team."
+      - name: home_club_position
+        description: "League position of the home team at the time of the match."
+      - name: away_club_position
+        description: "League position of the away team at the time of the match."
+      - name: home_club_manager_name
+        description: "Name of the home team's manager during the match."
+      - name: away_club_manager_name
+        description: "Name of the away team's manager during the match."
+      - name: stadium
+        description: "Name of the stadium where the match was played."
+      - name: attendance
+        description: "Number of spectators attending the match."
+      - name: referee
+        description: "Name of the referee officiating the match."
+      - name: url
+        description: "Web URL with more details about the match."
+      - name: home_club_formation
+        description: "Tactical formation used by the home team."
+      - name: away_club_formation
+        description: "Tactical formation used by the away team."
+      - name: home_club_name
+        description: "Full name of the home team."
+      - name: away_club_name
+        description: "Full name of the away team."
+      - name: aggregate
+        description: "Aggregate score if the match is part of a two-legged tie."
+      - name: competition_type
+        description: "Type of competition (e.g., league, cup, friendly)."
