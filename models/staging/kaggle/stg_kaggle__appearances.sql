@@ -1,3 +1,8 @@
+{{ config(
+    materialized='incremental'
+    ) 
+    }}
+
 with source_appearances as (
 
     select * from {{ source('kaggle','appearances') }}
@@ -17,7 +22,8 @@ casted as (
         red_cards::number(38,0) as red_cards,
         goals::number(38,0) as goals,
         assists::number(38,0) as assists,
-        minutes_played::number(38,0) as minutes_played
+        minutes_played::number(38,0) as minutes_played,
+        date_ingest::date as date_ingest
 
     from source_appearances
 )
@@ -35,6 +41,13 @@ select
     red_cards,
     goals,
     assists,
-    minutes_played
+    minutes_played,
+    date_ingest
     
 from casted
+
+{% if is_incremental() %}
+
+  where date_ingest >= (select max(date_ingest) from {{ this }})
+
+{% endif %}
