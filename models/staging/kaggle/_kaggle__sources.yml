@@ -1,14 +1,20 @@
 version: 2
 
 sources:
+
   - name: kaggle
-    database: football
+    database: football_dev_bronze_db
+    schema: kaggle
+
     tables:
       - name: appearances
-        description: ""
+        description: "Player playing in every match"
         columns:
           - name: appearance_id
             description: "Unique identifier for each player appearance in a match."
+            tests:
+              - not_null
+              - unique
           - name: game_id
             description: "Unique identifier for the match where the appearance occurred."
           - name: player_id
@@ -38,6 +44,9 @@ sources:
         columns:
           - name: club_id
             description: "Unique identifier for the football club."
+            tests:
+              - not_null
+              - unique
           - name: club_code
             description: "Short alphanumeric code representing the club."
           - name: name
@@ -63,7 +72,7 @@ sources:
           - name: net_transfer_record
             description: "Net transfer spending or income for the club (may be positive or negative)."
           - name: coach_name
-            description: "Full name of the club’s head coach."
+            description: "Full name of the club's head coach."
           - name: last_season
             description: "The last season for which data is available for the club."
           - name: filename
@@ -100,6 +109,9 @@ sources:
         columns:
           - name: competition_id
             description: "Unique identifier for the football competition."
+            tests:
+              - not_null
+              - unique
           - name: competition_code
             description: "Short alphanumeric code representing the competition."
           - name: name
@@ -125,6 +137,9 @@ sources:
         columns:
           - name: game_id
             description: "Unique identifier for the match."
+            tests:
+              - not_null
+              - unique
           - name: competition_id
             description: "Identifier for the competition in which the match took place."
           - name: season
@@ -146,9 +161,9 @@ sources:
           - name: away_club_position
             description: "League position of the away team at the time of the match."
           - name: home_club_manager_name
-            description: "Name of the home team’s manager during the match."
+            description: "Name of the home team's manager during the match."
           - name: away_club_manager_name
-            description: "Name of the away team’s manager during the match."
+            description: "Name of the away team's manager during the match."
           - name: stadium
             description: "Name of the stadium where the match was played."
           - name: attendance
@@ -174,6 +189,9 @@ sources:
         columns:
           - name: game_event_id
             description: "Unique identifier for each event occurring in a match."
+            tests:
+              - not_null
+              - unique
           - name: date
             description: "Date when the event occurred."
           - name: game_id
@@ -197,6 +215,9 @@ sources:
         columns:
           - name: game_lineups_id
             description: "Unique identifier for each player lineup entry in a match."
+            tests:
+              - not_null
+              - unique
           - name: date
             description: "Date when the match took place."
           - name: game_id
@@ -220,6 +241,9 @@ sources:
         columns:
           - name: player_id
             description: "Unique identifier for the player."
+            tests:
+              - not_null
+              - unique
           - name: first_name
             description: "Player's first name."
           - name: last_name
@@ -265,18 +289,18 @@ sources:
           - name: highest_market_value_in_eur
             description: "Highest historical market value of the player in Euros."
 
-      - name: player_valuations
-        columns:
-          - name: player_id
-            description: "Unique identifier for the player."
-          - name: date
-            description: "Date when the market valuation was recorded."
-          - name: market_value_in_eur
-            description: "Player's estimated market value in Euros on the given date."
-          - name: current_club_id
-            description: "Identifier for the player's current club at the time of valuation."
-          - name: player_club_domestic_competition_id
-            description: "Identifier for the domestic competition of the player's club at the time of valuation."
+      # - name: player_valuations
+      #   columns:
+      #     - name: player_id
+      #       description: "Unique identifier for the player."
+      #     - name: date
+      #       description: "Date when the market valuation was recorded."
+      #     - name: market_value_in_eur
+      #       description: "Player's estimated market value in Euros on the given date."
+      #     - name: current_club_id
+      #       description: "Identifier for the player's current club at the time of valuation."
+      #     - name: player_club_domestic_competition_id
+      #       description: "Identifier for the domestic competition of the player's club at the time of valuation."
 
       - name: transfers
         columns:

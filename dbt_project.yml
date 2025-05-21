@@ -40,9 +40,13 @@ models:
     +materialized: view
     # Applies to all files under models/example/
     staging:
+      database: football_dev_silver_db
+      +materialized: view
+      # +post-hook:
+      #   - "{{ export_table(this) }}"
+    marts:
+      database: football_dev_gold_db
       +materialized: table
-      +post-hook:
-        - "{{ export_table(this) }}"
 
 vars:
   competition_codes: [

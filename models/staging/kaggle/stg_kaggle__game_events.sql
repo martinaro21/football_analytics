@@ -3,25 +3,31 @@ with source_game_events as(
 ),
 
 casted as(
-    {{ dbt_utils.generate_surrogate_key([
-        'game_id',
-        'player_id',
-        'club_id',
-        'type',
-        'minute',
-        'description',
-        'player_in_id',
-        'player_assist_id'
-    ]) }} as game_event_id,
-    "date"::date as "date",
-    game_id::int as game_id,
-    "minute"::int as "minute",
-    "type"::string as "type",
-    club_id::string as club_id,
-    player_id::string as player_id,
-    description::string as description,
-    player_in_id::int as player_in_id,
-    player_assist_id::int as player_assist_id
+    select
+        game_event_id::varchar(16777216) as game_event_id,
+        date::date as date,
+        game_id::number(38,0) as game_id,
+        minute::number(38,0) as minute,
+        type::varchar(16777216) as type,
+        club_id::number(38,0) as club_id,
+        player_id::number(38,0) as player_id,
+        description::varchar(16777216) as description,
+        player_in_id::number(38,0) as player_in_id,
+        player_assist_id::number(38,0) as player_assist_id
+
+    from source_game_events
 )
 
-select * from casted
+select 
+    {{ dbt_utils.generate_surrogate_key(['game_event_id']) }} as game_event_id,
+    date,
+    {{ dbt_utils.generate_surrogate_key(['game_id']) }} as game_id,
+    minute,
+    type,
+    {{ dbt_utils.generate_surrogate_key(['club_id']) }} as club_id,
+    {{ dbt_utils.generate_surrogate_key(['player_id']) }} as player_id,
+    description,
+    {{ dbt_utils.generate_surrogate_key(['player_in_id']) }} as player_in_id,
+    {{ dbt_utils.generate_surrogate_key(['player_assist_id']) }} as player_assist_id
+
+from casted

@@ -3,51 +3,38 @@ with source_appearances as (
     select * from {{ source('kaggle','appearances') }}
 
 ),
-appearances_cte as (
+casted as (
     select
-        (game_id || '_' || player_id) as appearance_id,
-        game_id::integer as game_id,
-        player_id::integer as player_id,
-        player_club_id::integer as player_club_id,
-        player_current_club_id::string as player_current_club_id,
-        "date"::date as "date",
-        player_name::string as player_name,
-        competition_id::string as competition_id,
-        yellow_cards::integer as yellow_cards,
-        red_cards::integer as red_cards,
-        goals::integer as goals,
-        assists::integer as assists,
-        minutes_played::integer as minutes_played
+        appearance_id::varchar(16777216) as appearance_id,
+        game_id::number(38,0) as game_id,
+        player_id::number(38,0) as player_id,
+        player_club_id::number(38,0) as player_club_id,
+        player_current_club_id::number(38,0) as player_current_club_id,
+        date::date as date,
+        player_name::varchar(16777216) as player_name,
+        competition_id::varchar(16777216) as competition_id,
+        yellow_cards::number(38,0) as yellow_cards,
+        red_cards::number(38,0) as red_cards,
+        goals::number(38,0) as goals,
+        assists::number(38,0) as assists,
+        minutes_played::number(38,0) as minutes_played
+
     from source_appearances
-),
-games_cte as (
-
-    select * from {{ source('kaggle','games') }}
-
-),
-players_cte as (
-
-    select * from {{ source('kaggle','players') }}
-
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(['ac.appearance_id']) }} as appearance_id,
-    ac.game_id,
-    ac.player_id,
-    ac.player_club_id,
-    coalesce(pc.current_club_id, -1) as player_current_club_id,
-    gc.date,
-    pc.name as player_name,
-    ac.competition_id,
-    ac.yellow_cards,
-    ac.red_cards,
-    ac.goals,
-    ac.assists,
-    ac.minutes_played
+    {{ dbt_utils.generate_surrogate_key(['appearance_id']) }} as appearance_id,
+    {{ dbt_utils.generate_surrogate_key(['game_id']) }} as game_id,
+    {{ dbt_utils.generate_surrogate_key(['player_id']) }} as player_id,
+    {{ dbt_utils.generate_surrogate_key(['player_club_id']) }} as player_club_id,
+    {{ dbt_utils.generate_surrogate_key(['player_current_club_id']) }} as player_current_club_id,
+    date,
+    player_name,
+    {{ dbt_utils.generate_surrogate_key(['competition_id']) }} as competition_id,
+    yellow_cards,
+    red_cards,
+    goals,
+    assists,
+    minutes_played
     
-from appearances_cte ac
-left join games_cte gc using(game_id)
-left join players_cte pc using(player_id)
-
-order by gc."date", ac.appearance_id 
+from casted

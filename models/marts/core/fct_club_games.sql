@@ -1,8 +1,7 @@
-with games_cte  as (
-
-    select * from {{ ref('base_kaggle__games') }}
-
+with game_source as (
+    select * from {{ref('dim_games')}}
 ),
+
 unioned as (
 
     select
@@ -17,7 +16,7 @@ unioned as (
         away_club_manager_name as opponent_manager_name,
         'Home' as hosting
 
-    from games_cte
+    from game_source
 
     union all
 
@@ -33,7 +32,7 @@ unioned as (
         home_club_manager_name as opponent_manager_name,
         'Away' as hosting
 
-    from games_cte
+    from game_source
 
 )
 
