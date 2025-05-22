@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ref('dim_games')}}
+    select * from {{ref('dim_players')}}
 )
 select 
     player_id,  

@@ -6,12 +6,12 @@
 
 with appearances_cte as (
 
-    select * from {{ ref('appearances') }}
+    select * from {{ ref('stg_kaggle__appearances') }}
 
 ),
 games_cte as (
 
-    select * from {{ ref('games') }}
+    select * from {{ ref('stg_kaggle__games') }}
 
 )
 -- get game IDs and club IDs from appearances and ensure that

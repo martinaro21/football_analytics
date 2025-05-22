@@ -3,11 +3,21 @@ version: 2
 sources:
 
   - name: kaggle
-    database: football_dev_bronze_db
+    database: "{{ env_var('DBT_ENVIRONMENTS') }}_bronze_db"
     schema: kaggle
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 7, period: day}
 
     tables:
       - name: appearances
+        loaded_at_field: date_ingest
         description: "Player playing in every match"
         columns:
           - name: appearance_id
@@ -39,6 +49,8 @@ sources:
             description: "Number of assists made by the player in the match."
           - name: minutes_played
             description: "Total minutes the player was on the pitch during the match."
+          - name: date_ingest
+            description: "The day when the ingestion was made"
 
       - name: clubs
         columns:
@@ -79,31 +91,6 @@ sources:
             description: "Name of the source file where the club's data was found."
           - name: url
             description: "Web URL containing more information about the club."
-
-      - name: club_games
-        columns:
-          - name: game_id
-            description: "Unique identifier for the match."
-          - name: club_id
-            description: "Identifier for the club this match data refers to."
-          - name: own_goals
-            description: "Number of goals scored by the club."
-          - name: own_position
-            description: "League position of the club at the time of the match."
-          - name: own_manager_name
-            description: "Name of the manager of the club for this match."
-          - name: opponent_id
-            description: "Identifier for the opposing club in the match."
-          - name: opponent_goals
-            description: "Number of goals scored by the opponent."
-          - name: opponent_position
-            description: "League position of the opponent at the time of the match."
-          - name: opponent_manager_name
-            description: "Name of the manager of the opponent club for this match."
-          - name: hosting
-            description: "Indicates whether the match was played at home, away, or neutral venue."
-          - name: is_win
-            description: "Boolean indicating if the club won the match (true/false)."
 
       - name: competitions
         columns:
@@ -288,19 +275,6 @@ sources:
             description: "Current estimated market value of the player in Euros."
           - name: highest_market_value_in_eur
             description: "Highest historical market value of the player in Euros."
-
-      # - name: player_valuations
-      #   columns:
-      #     - name: player_id
-      #       description: "Unique identifier for the player."
-      #     - name: date
-      #       description: "Date when the market valuation was recorded."
-      #     - name: market_value_in_eur
-      #       description: "Player's estimated market value in Euros on the given date."
-      #     - name: current_club_id
-      #       description: "Identifier for the player's current club at the time of valuation."
-      #     - name: player_club_domestic_competition_id
-      #       description: "Identifier for the domestic competition of the player's club at the time of valuation."
 
       - name: transfers
         columns:

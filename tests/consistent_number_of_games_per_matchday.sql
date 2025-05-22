@@ -5,15 +5,15 @@
 
 with games_cte as (
 
-    select * from {{ ref('games') }}
+    select * from {{ ref('stg_kaggle__games') }}
 ),
 competitions_cte as (
 
-    select * from {{ ref('competitions') }}
+    select * from {{ ref('stg_kaggle__competitions') }}
 )
 
 select
- "round",
+ round,
  season,
  competition_id,
  count(*)

@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_kaggle__appearances
-    description: ""
+    description: "Staging for the matches and all of the players playing"
     columns:
       - name: appearance_id
         description: "Unique identifier for each player appearance in a match."
@@ -88,7 +88,7 @@ models:
         description: "Highest historical market value of the player in Euros."
 
   - name: stg_kaggle__transfers
-    description: ""
+    description: "Model for the staging of transfers"
     columns:
       - name: player_id
         description: "Unique identifier for the player involved in the transfer."
@@ -113,7 +113,7 @@ models:
 
 
   - name: stg_kaggle__game_lineups
-    description: ""
+    description: "Model for the game lineups"
     columns:
       - name: game_lineups_id
         description: "Unique identifier for each player lineup entry in a match."
@@ -140,7 +140,7 @@ models:
         description: "Boolean indicating if the player was the team captain."
 
   - name: stg_kaggle__clubs
-    description: ""
+    description: "Staging model for the clubs"
     columns:
       - name: club_id
         description: "Unique identifier for the football club."
@@ -181,7 +181,7 @@ models:
         description: "Web URL containing more information about the club."
 
   - name: stg_kaggle__game_events
-    description: ""
+    description: "Staging model for the events in a game"
     columns:
       - name: game_event_id
         description: "Unique identifier for each event occurring in a match."
@@ -208,7 +208,7 @@ models:
         description: "Identifier of the player assisting the event (e.g., assist for a goal)."
 
   - name: stg_kaggle__competitions
-    description: ""
+    description: "Staging model for the competitions"
     columns:
       - name: competition_id
         description: "Unique identifier for the football competition."
@@ -237,7 +237,7 @@ models:
         description: "Boolean indicating whether the competition is a major national league (true/false)."
   
   - name: stg_kaggle__games
-    description: ""
+    description: "Staging model for the games"
     columns:
       - name: game_id
         description: "Unique identifier for the match."
